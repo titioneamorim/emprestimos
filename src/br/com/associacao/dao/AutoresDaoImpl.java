@@ -5,7 +5,7 @@
  */
 package br.com.associacao.dao;
 
-import br.com.associacao.entidade.Usuario;
+import br.com.associacao.entidade.Autores;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,49 +24,37 @@ public class AutoresDaoImpl implements Serializable {
     protected PreparedStatement preparando;
     protected ResultSet resultSet;
 
-    public void salvar(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuarios (cdUsuario, Nome, Login, Senha, "
-                + "Logradouro, Cidade, Estado, CEP) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    public void salvar(Autores autores) throws SQLException {
+        String sql = "INSERT INTO autores (cdAutores, nmAutor, cdLivro) VALUES(?, ?, ?)";
         try {
             conexao = FabricaConexao.abrirConexao();
             preparando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparando.setInt(1, usuario.getCdusuario());
-            preparando.setString(2, usuario.getNome());
-            preparando.setString(3, usuario.getLogin());
-            preparando.setString(4, usuario.getSenha());
-            preparando.setString(5, usuario.getLogradouro());
-            preparando.setString(6, usuario.getCidade());
-            preparando.setString(7, usuario.getEstado());
-            preparando.setString(8, usuario.getCep());
+            preparando.setInt(1, autores.getCdAutores());
+            preparando.setString(2, autores.getNmAutor());
+            preparando.setInt(3, autores.getCdLivro());
             preparando.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Erro ao salvar Usuario " + e.getMessage());
+            System.err.println("Erro ao salvar autor " + e.getMessage());
         }
     }
 
-    public void alterar(Usuario usuario) throws SQLException {
-        String sql = "UPDATE Usuarios SET Nome = ?, Login = ?, Senha = ?,"
-                + "Logradouro = ?, Cidade = ?, Estado= ?, CEP = ?";
+    public void alterar(Autores autores) throws SQLException {
+        String sql = "UPDATE autores SET nmAutor = ?, cdLivro = ?";
         try {
             conexao = FabricaConexao.abrirConexao();
-            preparando.setString(1, usuario.getNome());
-            preparando.setString(2, usuario.getLogin());
-            preparando.setString(3, usuario.getSenha());
-            preparando.setString(4, usuario.getLogradouro());
-            preparando.setString(5, usuario.getCidade());
-            preparando.setString(6, usuario.getEstado());
-            preparando.setString(7, usuario.getCep());
+            preparando.setString(1, autores.getNmAutor());
+            preparando.setInt(2, autores.getCdLivro());
             preparando.executeUpdate();
 
         } catch (SQLException e) {
-            System.err.println("Erro ao alterar Usuario " + e.getMessage());
+            System.err.println("Erro ao alterar autor " + e.getMessage());
         }
     }
 
     public void excluir(Integer id) throws SQLException {
         try {
             conexao = FabricaConexao.abrirConexao();
-            preparando = conexao.prepareStatement("DELETE FROM Usuarios WHERE  cdUsuario = ?");
+            preparando = conexao.prepareStatement("DELETE FROM autores WHERE  cdAutores = ?");
             preparando.setInt(1, id);
             preparando.executeUpdate();
         } catch (SQLException e) {
@@ -76,27 +64,23 @@ public class AutoresDaoImpl implements Serializable {
         }
     }
 
-    public Usuario pesquisarPorId(Integer id) throws SQLException {
-        String consulta = "SELECT * FROM Usuarios WHERE cdUsuario = ?";
-        Usuario usuario = null;
+    public Autores pesquisarPorId(Integer id) throws SQLException {
+        String consulta = "SELECT * FROM autores WHERE cdAutores = ?";
+        Autores autores = null;
         try {
             conexao = FabricaConexao.abrirConexao();
             preparando = conexao.prepareStatement(consulta);
             preparando.setInt(1, id);
             resultSet = preparando.executeQuery();
-            usuario.setNome(resultSet.getString("Nome"));
-            usuario.setLogin(resultSet.getString("Nogin"));
-            usuario.setSenha(resultSet.getString("Senha"));
-            usuario.setLogradouro(resultSet.getString("Logradouro"));
-            usuario.setCidade(resultSet.getString("Cidade"));
-            usuario.setEstado(resultSet.getString("Estado"));
-            usuario.setCep(resultSet.getString("CEP"));
-        } catch (SQLException e) {
+            autores.setCdAutores(resultSet.getInt("cdAutor"));
+            autores.setNmAutor(resultSet.getString("nmAutor"));
+            autores.setCdLivro(resultSet.getInt("cdLivro"));
+            } catch (SQLException e) {
             System.err.println("Erro ao pesquisar por id. Erro =  " + e.getMessage());
         } finally {
             FabricaConexao.fecharConexao(conexao, preparando, resultSet);
         }
-        return usuario;
+        return autores;
     }
 
 }
