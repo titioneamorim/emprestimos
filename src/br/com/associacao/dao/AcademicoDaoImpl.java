@@ -5,14 +5,13 @@
  */
 package br.com.associacao.dao;
 
-import br.com.associacao.entidade.Usuario;
+import br.com.associacao.entidade.Academico;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 
 /**
  *
@@ -24,49 +23,47 @@ public class AcademicoDaoImpl implements Serializable {
     protected PreparedStatement preparando;
     protected ResultSet resultSet;
 
-    public void salvar(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuarios (cdUsuario, Nome, Login, Senha, "
-                + "Logradouro, Cidade, Estado, CEP) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    public void salvar(Academico academico) throws SQLException {
+        String sql = "INSERT INTO academico (cdMatricula, nmAcademico, CPF, dsEmail, "
+                + "dsEndereco, idSexo, idade) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try {
             conexao = FabricaConexao.abrirConexao();
             preparando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparando.setInt(1, usuario.getCdusuario());
-            preparando.setString(2, usuario.getNome());
-            preparando.setString(3, usuario.getLogin());
-            preparando.setString(4, usuario.getSenha());
-            preparando.setString(5, usuario.getLogradouro());
-            preparando.setString(6, usuario.getCidade());
-            preparando.setString(7, usuario.getEstado());
-            preparando.setString(8, usuario.getCep());
+            preparando.setInt(1, academico.getCdMatricula());
+            preparando.setString(2, academico.getNmAcademico());
+            preparando.setInt(3, academico.getCpf());
+            preparando.setString(4, academico.getDsEmail());
+            preparando.setString(5, academico.getDsEndereco());
+            preparando.setInt(6, academico.getIdSexo());
+            preparando.setInt(7, academico.getIdade());
             preparando.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Erro ao salvar Usuario " + e.getMessage());
+            System.err.println("Erro ao salvar academico " + e.getMessage());
         }
     }
 
-    public void alterar(Usuario usuario) throws SQLException {
-        String sql = "UPDATE Usuarios SET Nome = ?, Login = ?, Senha = ?,"
-                + "Logradouro = ?, Cidade = ?, Estado= ?, CEP = ?";
+    public void alterar(Academico academico) throws SQLException {
+        String sql = "UPDATE academico SET nmAcademico = ?, CPF = ?, dsEmail = ?,"
+                + "dsEndereco = ?, idSexo = ?, idade= ?";
         try {
             conexao = FabricaConexao.abrirConexao();
-            preparando.setString(1, usuario.getNome());
-            preparando.setString(2, usuario.getLogin());
-            preparando.setString(3, usuario.getSenha());
-            preparando.setString(4, usuario.getLogradouro());
-            preparando.setString(5, usuario.getCidade());
-            preparando.setString(6, usuario.getEstado());
-            preparando.setString(7, usuario.getCep());
+            preparando.setString(1, academico.getNmAcademico());
+            preparando.setInt(2, academico.getCpf());
+            preparando.setString(3, academico.getDsEmail());
+            preparando.setString(4, academico.getDsEndereco());
+            preparando.setInt(5, academico.getIdSexo());
+            preparando.setInt(6, academico.getIdade());
             preparando.executeUpdate();
 
         } catch (SQLException e) {
-            System.err.println("Erro ao alterar Usuario " + e.getMessage());
+            System.err.println("Erro ao alterar Academico " + e.getMessage());
         }
     }
 
     public void excluir(Integer id) throws SQLException {
         try {
             conexao = FabricaConexao.abrirConexao();
-            preparando = conexao.prepareStatement("DELETE FROM Usuarios WHERE  cdUsuario = ?");
+            preparando = conexao.prepareStatement("DELETE FROM academico WHERE  cdMatricula = ?");
             preparando.setInt(1, id);
             preparando.executeUpdate();
         } catch (SQLException e) {
@@ -76,27 +73,25 @@ public class AcademicoDaoImpl implements Serializable {
         }
     }
 
-    public Usuario pesquisarPorId(Integer id) throws SQLException {
-        String consulta = "SELECT * FROM Usuarios WHERE cdUsuario = ?";
-        Usuario usuario = null;
+    public Academico pesquisarPorId(Integer id) throws SQLException {
+        String consulta = "SELECT * FROM academico WHERE cdMatricula = ?";
+        Academico academico = null;
         try {
             conexao = FabricaConexao.abrirConexao();
             preparando = conexao.prepareStatement(consulta);
             preparando.setInt(1, id);
             resultSet = preparando.executeQuery();
-            usuario.setNome(resultSet.getString("Nome"));
-            usuario.setLogin(resultSet.getString("Nogin"));
-            usuario.setSenha(resultSet.getString("Senha"));
-            usuario.setLogradouro(resultSet.getString("Logradouro"));
-            usuario.setCidade(resultSet.getString("Cidade"));
-            usuario.setEstado(resultSet.getString("Estado"));
-            usuario.setCep(resultSet.getString("CEP"));
+            academico.setNmAcademico(resultSet.getString("nmAcademico"));
+            academico.setCpf(resultSet.getInt("CPF"));
+            academico.setDsEmail(resultSet.getString("dsEmail"));
+            academico.setDsEndereco(resultSet.getString("dsEndereco"));
+            academico.setIdSexo(resultSet.getInt("idSexo"));
         } catch (SQLException e) {
             System.err.println("Erro ao pesquisar por id. Erro =  " + e.getMessage());
         } finally {
             FabricaConexao.fecharConexao(conexao, preparando, resultSet);
         }
-        return usuario;
+        return academico;
     }
 
 }
