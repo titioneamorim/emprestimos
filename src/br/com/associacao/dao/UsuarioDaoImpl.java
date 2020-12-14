@@ -5,7 +5,7 @@
  */
 package br.com.associacao.dao;
 
-import br.com.associacao.entidade.Usuario;
+import br.com.associacao.model.Usuario;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

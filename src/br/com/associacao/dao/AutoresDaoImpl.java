@@ -5,7 +5,7 @@
  */
 package br.com.associacao.dao;
 
-import br.com.associacao.entidade.Autores;
+import br.com.associacao.model.Autores;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

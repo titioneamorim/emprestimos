@@ -5,7 +5,7 @@
  */
 package br.com.associacao.dao;
 
-import br.com.associacao.entidade.Academico;
+import br.com.associacao.model.Academico;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

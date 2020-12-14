@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.associacao.entidade;
+package br.com.associacao.model;
 
 import java.sql.Date;
 
@@ -19,7 +19,7 @@ public class Emprestimo {
     int cdLivro;
     Date dtDevolucao;
     Date dtRetirada;
-
+   
     public Emprestimo() {
     }
 

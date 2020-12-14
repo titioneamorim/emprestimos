@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.associacao.entidade;
+package br.com.associacao.model;
 
 /**
  *
  * @author Titione
  */
-public class Usuario {
+public class Bibliotecario {
     
-    int cdusuario;
+    int cdBibliotecario;
     String nome;
     String login;
     String senha;
@@ -20,11 +20,11 @@ public class Usuario {
     String estado;
     String cep;
 
-    public Usuario() {
+    public Bibliotecario() {
     }
 
-    public Usuario(int cdusuario, String nome, String login, String senha, String logradouro, String cidade, String estado, String cep) {
-        this.cdusuario = cdusuario;
+    public Bibliotecario(int cdBibliotecario, String nome, String login, String senha, String logradouro, String cidade, String estado, String cep) {
+        this.cdBibliotecario = cdBibliotecario;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
@@ -34,12 +34,12 @@ public class Usuario {
         this.cep = cep;
     }
 
-    public int getCdusuario() {
-        return cdusuario;
+    public int getCdBibliotecario() {
+        return cdBibliotecario;
     }
 
-    public void setCdusuario(int cdusuario) {
-        this.cdusuario = cdusuario;
+    public void setCdBibliotecario(int cdBibliotecario) {
+        this.cdBibliotecario = cdBibliotecario;
     }
 
     public String getNome() {
