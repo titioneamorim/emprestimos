@@ -85,7 +85,7 @@ public class UsuarioDaoImpl implements Serializable {
             preparando.setInt(1, id);
             resultSet = preparando.executeQuery();
             usuario.setNome(resultSet.getString("Nome"));
-            usuario.setLogin(resultSet.getString("Nogin"));
+            usuario.setLogin(resultSet.getString("Login"));
             usuario.setSenha(resultSet.getString("Senha"));
             usuario.setLogradouro(resultSet.getString("Logradouro"));
             usuario.setCidade(resultSet.getString("Cidade"));
